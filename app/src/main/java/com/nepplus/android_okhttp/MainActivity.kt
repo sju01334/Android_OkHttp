@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.nepplus.android_okhttp.databinding.ActivityMainBinding
+import okhttp3.FormBody
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +23,10 @@ class MainActivity : AppCompatActivity() {
         binding.loginBtn.setOnClickListener {
             val inputEmail = binding.emailEdt.text.toString()
             val inputPW = binding.emailEdt.text.toString()
+
+
+
+
         }
 
     }
