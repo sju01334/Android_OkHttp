@@ -17,7 +17,10 @@ class SignupActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
-        TODO("Not yet implemented")
+        binding.signUpBtn.setOnClickListener {
+
+
+        }
     }
 
     override fun setValues() {

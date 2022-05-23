@@ -1,5 +1,6 @@
 package com.nepplus.android_okhttp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,11 @@ class MainActivity : BaseActivity() {
 
 
     override  fun setupEvents(){
+
+        binding.signUpBtn.setOnClickListener {
+            val myIntent = Intent(mContext, SignupActivity::class.java)
+            startActivity(myIntent)
+        }
         binding.loginBtn.setOnClickListener {
             val inputEmail = binding.emailEdt.text.toString()
             val inputPW = binding.passwordEdt.text.toString()
