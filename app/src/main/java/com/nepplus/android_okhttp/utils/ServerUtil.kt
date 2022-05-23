@@ -22,9 +22,8 @@ class ServerUtil {
         }
 
         val BASE_URL = "http://54.180.52.26"
-
-        //        로그인 기능 호출 함수
-        fun postRequestLogin(email: String, pw: String, handler: JsonResponseHandler) {
+//          로그인 기능 호출 함수
+        fun postRequestLogin(email: String, pw: String, handler: JsonResponseHandler?) {
 
 //             Request 제작 -> 실제호출 -> 서버의 응답을 화면에 전당
 //            제작 1) 어느 주소 (url)로 접근 할지 => 서버주소 + 기능주소
@@ -100,6 +99,35 @@ class ServerUtil {
 
         }
 
+//         회원가입 호출함수
+        fun putRequestSignup (email:  String, pw : String, nickname : String, handler: JsonResponseHandler?){
+            val urlString = "${BASE_URL}/user"
+
+            val formData = FormBody.Builder()
+                .add("email", email)
+                .add("password", pw)
+                .add("nick_name", nickname)
+                .build()
+
+            val request = Request.Builder()
+                .url(urlString)
+                .put(formData)
+                .build()
+
+            val client = OkHttpClient()
+            client.newCall(request).enqueue(object : Callback{
+                override fun onFailure(call: Call, e: IOException) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+
+                    val jsonObj = JSONObject(bodyString)
+                    handler?.onResponse(jsonObj)
+                }
+            })
+        }
 
     }
 
