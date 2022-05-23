@@ -6,6 +6,10 @@ import org.json.JSONObject
 import java.io.IOException
 
 class ServerUtil {
+//    서버유틸로 돌아온 응답을 => 액티비티에서 처리하도록, 일처리 넘기기
+//    나에게 생긴일을 > 다른클래스에게 처리 요청
+
+
 
 //    서버에 Request  날리는 역할
 //    함수를 만들려고 하는데, 어떤 객체가 실행해도 결과만 잘 나오면 그만인 함수
@@ -13,10 +17,14 @@ class ServerUtil {
 
     companion object {
 
+        interface  JsonResponseHandler {
+            fun onResponse(jsonObj : JSONObject)
+        }
+
         val BASE_URL = "http://54.180.52.26"
 
         //        로그인 기능 호출 함수
-        fun postRequestLogin(email: String, pw: String) {
+        fun postRequestLogin(email: String, pw: String, handler: JsonResponseHandler) {
 
 //             Request 제작 -> 실제호출 -> 서버의 응답을 화면에 전당
 //            제작 1) 어느 주소 (url)로 접근 할지 => 서버주소 + 기능주소
@@ -63,23 +71,26 @@ class ServerUtil {
 //                   연습 : 로그인 성공/실패에 따른 로그 추출
 //                   "code" 이름표의 Int 를 추출, 그 값을 추출
 
-                    val code = jsonObj.getInt("code")
+//                    val code = jsonObj.getInt("code")
+//
+//                    if (code == 200) {
+////                       로그인 시도 성공
+//                        Log.d("로그인시도", "성공")
+//                        val userObj = jsonObj.getJSONObject("data").getJSONObject("user")
+//                        val nickname = userObj.getString("nick_name")
+//
+//                        Log.d("닉네임", nickname)
+//
+//                    } else {
+//                        Log.d("로그인시도", "실패")
+//                        val message = jsonObj.getString("message")
+//                        Log.d("실패사유", message)
+//
+//
+//                    }
 
-                    if (code == 200) {
-//                       로그인 시도 성공
-                        Log.d("로그인시도", "성공")
-                        val userObj = jsonObj.getJSONObject("data").getJSONObject("user")
-                        val nickname = userObj.getString("nick_name")
+                    handler?.onResponse(jsonObj)
 
-                        Log.d("닉네임", nickname)
-
-                    } else {
-                        Log.d("로그인시도", "실패")
-                        val message = jsonObj.getString("message")
-                        Log.d("실패사유", message)
-
-
-                    }
 
 
                 }
