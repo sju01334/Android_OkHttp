@@ -1,5 +1,6 @@
 package com.nepplus.android_okhttp.utils
 
+import android.content.Context
 import android.util.Log
 import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
@@ -164,5 +165,34 @@ class ServerUtil {
                 }
             })
         }
+
+        //          사용자 정보 조회(Token 값의 유효성 검사)
+        fun getRequestUserInfo(context : Context, handler: JsonResponseHandler?){
+            var token = ContextUtil.getLoginToken(context)
+            val urlBuilder = "${BASE_URL}/user_info".toHttpUrlOrNull()!!.newBuilder()
+            val urlString = urlBuilder.toString()
+
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .header("X-Http-Token", token)
+                .build()
+
+            val client = OkHttpClient()
+            client.newCall(request).enqueue(object : Callback{
+                override fun onFailure(call: Call, e: IOException) {
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val jsonObj = JSONObject(response.body!!.string())
+                    Log.d("서버응답", jsonObj.toString())
+                    handler?.onResponse(jsonObj)
+                }
+
+            })
+
+        }
+
+
     }
 }

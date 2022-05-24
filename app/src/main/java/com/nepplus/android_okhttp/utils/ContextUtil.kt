@@ -6,10 +6,10 @@ class ContextUtil {
     companion object{
 
         //메모장 이름
-        val prefName = "OkHttpPracticePref"
+        private  val prefName = "OkHttpPracticePref"
 
-        val AUTO_LOGIN = "AUTO_LOGIN"
-        val LOGIN_TOKEN = "LOGIN_TOKEN"
+        private val AUTO_LOGIN = "AUTO_LOGIN"
+        private val LOGIN_TOKEN = "LOGIN_TOKEN"
 
         fun setLoginToken(context: Context, token : String){
             val pref = context.getSharedPreferences(prefName,Context.MODE_PRIVATE)
@@ -21,6 +21,7 @@ class ContextUtil {
             return pref.getString(LOGIN_TOKEN, "")!!
         }
 
+
         fun setAutoLogin( context : Context, isAuto : Boolean){
             val pref = context.getSharedPreferences(prefName,Context.MODE_PRIVATE)
             pref.edit().putBoolean(AUTO_LOGIN, isAuto).apply()
@@ -30,6 +31,11 @@ class ContextUtil {
             val pref = context.getSharedPreferences(prefName,Context.MODE_PRIVATE)
             return pref.getBoolean(AUTO_LOGIN, false)
             //아무것도 아닐때는 false값을 넣는다
+        }
+
+        fun clear(context : Context){
+            val pref = context.getSharedPreferences(prefName , Context.MODE_PRIVATE)
+            pref.edit().clear().apply()
         }
 
 
