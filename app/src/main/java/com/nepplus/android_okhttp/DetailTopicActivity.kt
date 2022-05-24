@@ -1,21 +1,20 @@
 package com.nepplus.android_okhttp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import com.nepplus.android_okhttp.databinding.ActivityDetailBinding
+import com.nepplus.android_okhttp.databinding.ActivityDetailTopicBinding
 
-class DetailActivity : BaseActivity() {
+class DetailTopicActivity : BaseActivity() {
 
-
+    lateinit var binding : ActivityDetailTopicBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_topic)
         setupEvents()
         setValues()
     }
 
-    lateinit var binding : ActivityDetailBinding
+
     override fun setupEvents() {
 
     }

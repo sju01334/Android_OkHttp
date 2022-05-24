@@ -1,6 +1,8 @@
 package com.nepplus.android_okhttp.models
 
-class TopicData {
+import java.io.Serializable
+
+class TopicData : Serializable{
 
     var id = 0
     var title = ""

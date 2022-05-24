@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Android_OkHttp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".DetailActivity"
+            android:name=".DetailTopicActivity"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"
