@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Android_OkHttp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SplashActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity

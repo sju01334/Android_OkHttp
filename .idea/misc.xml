@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Nepplus/Android_OkHttp/app/src/main/res/layout/activity_login.xml" value="0.18489583333333334" />
         <entry key="..\:/Nepplus/Android_OkHttp/app/src/main/res/layout/activity_main.xml" value="0.18489583333333334" />
         <entry key="..\:/Nepplus/Android_OkHttp/app/src/main/res/layout/activity_signup.xml" value="0.18489583333333334" />
+        <entry key="..\:/Nepplus/Android_OkHttp/app/src/main/res/layout/activity_splash.xml" value="0.21875" />
       </map>
     </option>
   </component>

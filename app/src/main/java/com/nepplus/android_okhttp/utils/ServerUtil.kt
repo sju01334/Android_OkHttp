@@ -2,6 +2,7 @@ package com.nepplus.android_okhttp.utils
 
 import android.util.Log
 import okhttp3.*
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.json.JSONObject
 import java.io.IOException
 
@@ -10,19 +11,19 @@ class ServerUtil {
 //    나에게 생긴일을 > 다른클래스에게 처리 요청
 
 
-
 //    서버에 Request  날리는 역할
 //    함수를 만들려고 하는데, 어떤 객체가 실행해도 결과만 잘 나오면 그만인 함수
 //    static  에 해당하는 개념? Companion object {} 에 만들자
 
     companion object {
 
-        interface  JsonResponseHandler {
-            fun onResponse(jsonObj : JSONObject)
+        interface JsonResponseHandler {
+            fun onResponse(jsonObj: JSONObject)
         }
 
         val BASE_URL = "http://54.180.52.26"
-//          로그인 기능 호출 함수
+
+        //          로그인 기능 호출 함수
         fun postRequestLogin(email: String, pw: String, handler: JsonResponseHandler?) {
 
 //             Request 제작 -> 실제호출 -> 서버의 응답을 화면에 전당
@@ -91,7 +92,6 @@ class ServerUtil {
                     handler?.onResponse(jsonObj)
 
 
-
                 }
 
             })
@@ -99,8 +99,9 @@ class ServerUtil {
 
         }
 
-//         회원가입 호출함수
-        fun putRequestSignup (email:  String, pw : String, nickname : String, handler: JsonResponseHandler?){
+        //         회원가입 호출함수
+        fun putRequestSignup(email: String, pw: String, nickname: String, handler: JsonResponseHandler?
+        ) {
             val urlString = "${BASE_URL}/user"
 
             val formData = FormBody.Builder()
@@ -115,7 +116,7 @@ class ServerUtil {
                 .build()
 
             val client = OkHttpClient()
-            client.newCall(request).enqueue(object : Callback{
+            client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     TODO("Not yet implemented")
                 }
@@ -129,7 +130,39 @@ class ServerUtil {
             })
         }
 
+        //          중복검사 기능 호출함수
+        fun getRequestUserCheck(type: String, value: String, handler: JsonResponseHandler?) {
+//            val urlBuilder = HttpUrl.parse("${BASE_URL}/uer_check")
+//            => toHttpUrlOrNull이 자동완성 안될경우 작성후 에러 수정(alt + enter)
+            val urlBuilder = "${BASE_URL}/user_check".toHttpUrlOrNull()!!.newBuilder()
+                .addEncodedQueryParameter("type", type)
+                .addEncodedQueryParameter("value", value)
+                .build()
+
+            val urlString = urlBuilder.toString()
+
+//            Log.d("완성된 url", urlString)
+
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .build()
+
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+                    Log.d("서버응답", jsonObj.toString())
+
+                    handler?.onResponse(jsonObj)
+                }
+            })
+        }
     }
-
-
 }
