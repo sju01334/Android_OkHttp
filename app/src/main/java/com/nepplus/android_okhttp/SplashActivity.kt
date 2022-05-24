@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import com.nepplus.android_okhttp.utils.ContextUtil
 import com.nepplus.android_okhttp.utils.ServerUtil
 import org.json.JSONObject
@@ -16,6 +17,7 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        Log.d("위치정보_splash", TAG)
         setupEvents()
         setValues()
     }

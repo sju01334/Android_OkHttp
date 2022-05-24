@@ -23,6 +23,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("위치정보_Main", TAG)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupEvents()
         setValues()
@@ -59,11 +60,7 @@ class MainActivity : BaseActivity() {
 
                     Log.d("받아낸 주제", topicObj.toString())
 
-                    val topicData = TopicData()
-                    topicData.id = topicObj.getInt("id")
-                    topicData.title = topicObj.getString("title")
-                    topicData.imageUrl = topicObj.getString("img_url")
-                    topicData.replyCount = topicObj.getInt("reply_count")
+                    val topicData = TopicData.getTopicDataFromJson(topicObj)
 
                     mTopicList.add(topicData)
 

@@ -44,6 +44,7 @@ class TopicRecyclerAdapter(var mContext : Context, val mList : List<TopicData>) 
             itemView.setOnClickListener {
                 val myIntent = Intent(mContext, DetailTopicActivity::class.java)
                 myIntent.putExtra("topicData", item)
+                mContext.startActivity(myIntent)
             }
 
         }
