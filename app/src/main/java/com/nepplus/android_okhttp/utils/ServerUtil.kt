@@ -194,5 +194,31 @@ class ServerUtil {
         }
 
 
+        //          메인 정보 조회 기능 호출 함수
+        fun getRequestMainInfo(context : Context, handler: JsonResponseHandler?){
+            var token = ContextUtil.getLoginToken(context)
+            val urlBuilder = "${BASE_URL}/v2/main_info".toHttpUrlOrNull()!!.newBuilder()
+            val urlString = urlBuilder.toString()
+
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .header("X-Http-Token", token)
+                .build()
+
+            val client = OkHttpClient()
+            client.newCall(request).enqueue(object : Callback{
+                override fun onFailure(call: Call, e: IOException) {
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val jsonObj = JSONObject(response.body!!.string())
+                    Log.d("서버응답", jsonObj.toString())
+                    handler?.onResponse(jsonObj)
+                }
+
+            })
+
+        }
     }
 }
