@@ -24,6 +24,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setCustomActionBar()
         setupEvents()
         setValues()
     }
@@ -33,6 +34,7 @@ class MainActivity : BaseActivity() {
 
             ContextUtil.clear(mContext)
             val myIntent = Intent(mContext, LoginActivity::class.java)
+            setCustomActionBar()
             startActivity(myIntent)
             finish()
         }
