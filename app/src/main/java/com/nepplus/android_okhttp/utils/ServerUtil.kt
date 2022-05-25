@@ -278,6 +278,59 @@ class ServerUtil {
             })
 
         }
+
+        //          aa
+        fun patchRequestUserInfo(context : Context, newNick : String, currentPw : String , newPw : String, handler: JsonResponseHandler?){
+
+            val urlString = "${BASE_URL}/user"
+
+
+            val formData = when {
+                (newNick.isEmpty() && newPw.isEmpty()) -> {
+                    FormBody.Builder()
+                        .add("current_password", currentPw)
+                        .add("new_password", newPw)
+                        .add("nick_name", newNick)
+                        .build()
+                }
+                (newPw.isEmpty()) -> {
+                    FormBody.Builder()
+                        .add("nick_name", newNick)
+                        .build()
+                }
+                else ->{
+                    FormBody.Builder()
+                        .add("current_password", currentPw)
+                        .add("new_password", newPw)
+                        .build()
+                }
+            }
+
+            val requestBody = Request.Builder()
+                .url(urlString)
+                .patch(formData)
+                .header("X-Http-Token", ContextUtil.getLoginToken(context))
+                .build()
+
+            val client = OkHttpClient()
+            client.newCall(requestBody).enqueue(object : Callback{
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val jsonObj = JSONObject(response.body!!.toString())
+                    handler?.onResponse(jsonObj)
+                }
+
+            })
+
+
+
+
+        }
+
+
     }
 
 
