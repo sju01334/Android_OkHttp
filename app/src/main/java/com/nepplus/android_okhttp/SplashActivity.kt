@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import com.nepplus.android_okhttp.models.UserData
 import com.nepplus.android_okhttp.utils.ContextUtil
+import com.nepplus.android_okhttp.utils.GlobalData
 import com.nepplus.android_okhttp.utils.ServerUtil
 import org.json.JSONObject
 
@@ -32,7 +34,14 @@ class SplashActivity : BaseActivity() {
         ServerUtil.getRequestUserInfo(mContext, object : ServerUtil.Companion.JsonResponseHandler{
             override fun onResponse(jsonObj: JSONObject) {
                 val code = jsonObj.getInt("code")
-                isTokenOk = (code == 200)
+//                isTokenOk = (code == 200)
+                if(code == 200){
+                    isTokenOk = true
+                    val dataObj = jsonObj.getJSONObject("data")
+                    val userObj = dataObj.getJSONObject("user")
+
+                    GlobalData.loginUser = UserData().getUserDataFromJson(userObj)
+                }
             }
         })
 

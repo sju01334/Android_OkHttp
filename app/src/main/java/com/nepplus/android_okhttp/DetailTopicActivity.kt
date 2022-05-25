@@ -19,7 +19,7 @@ class DetailTopicActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_topic)
         mTopicData = intent.getSerializableExtra("topicData") as TopicData
-
+        titleTxt.text = mTopicData.title
         setupEvents()
         setValues()
     }
@@ -48,7 +48,6 @@ class DetailTopicActivity : BaseActivity() {
                 val topicObj = dataObj.getJSONObject("topic")
 
                 val topicData = TopicData.getTopicDataFromJson(topicObj)
-
                 mTopicData = topicData
             }
         })
